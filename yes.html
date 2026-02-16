@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knew you would say yes! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .emoji {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .gif-container {
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .message {
+            font-size: 1.3rem;
+            color: #555;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        .heart {
+            color: #e74c3c;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .audio-toggle {
+            margin-top: 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-toggle:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .message {
+                font-size: 1.1rem;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🎉</div>
+        <h1>Knew you would say yes! 🎉</h1>
+        
+        <div class="gif-container">
+            <img src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="celebrating">
+        </div>
+        
+        <p class="message">
+            You just made me the happiest person! <span class="heart">💕</span>
+        </p>
+        
+        <button class="audio-toggle" onclick="toggleAudio()">🔊</button>
+        
+        <audio id="bgMusic" loop>
+            <!-- You can add your own audio file here -->
+            <!-- <source src="your-music-file.mp3" type="audio/mpeg"> -->
+        </audio>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const audioToggle = document.querySelector('.audio-toggle');
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                audioToggle.textContent = '🔊';
+                isPlaying = false;
+            } else {
+                audio.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                    alert('Add an audio file to enable music!');
+                });
+                audioToggle.textContent = '🔇';
+                isPlaying = true;
+            }
+        }
+
+        // Add some confetti effect
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#e74c3c', '#f39c12', '#3498db'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.cssText = `
+                        position: fixed;
+                        width: 10px;
+                        height: 10px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        left: ${Math.random() * 100}vw;
+                        top: -10px;
+                        opacity: ${Math.random()};
+                        animation: fall ${3 + Math.random() * 2}s linear;
+                    `;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // Add falling animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Trigger confetti on load
+        window.addEventListener('load', createConfetti);
+    </script>
+</body>
+</html>
